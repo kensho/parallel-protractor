@@ -10,7 +10,7 @@ node_js:
   - '6'
 before_script:
   - npm prune
-  - cd test/one; npm run install-hub
+  - cd test/one; npm install; npm run install-hub
   - cd test/one; npm run npm run start-hub &
 script:
   - npm test

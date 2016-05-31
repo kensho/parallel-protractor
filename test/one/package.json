@@ -4,8 +4,8 @@
   "description": "Parallel-protractor test project one",
   "main": "conf.js",
   "scripts": {
-    "install-hub": "./node_modules/.bin/webdriver-manager update --standalone",
-    "start-hub": "./node_modules/.bin/webdriver-manager start",
+    "install-hub": "webdriver-manager update --standalone",
+    "start-hub": "webdriver-manager start",
     "test": "protractor conf.js",
     "test-in-parallel": "node -r ../.. node_modules/.bin/protractor conf.js"
   },
