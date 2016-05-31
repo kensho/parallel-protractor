@@ -11,7 +11,7 @@ exports.config = {
     slow: 5000
   },
   capabilities: {
-    browserName: 'chrome',
+    browserName: 'firefox', // chrome
     shardTestFiles: true,
     maxInstances: 2
   }
