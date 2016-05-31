@@ -28,21 +28,10 @@ Module._load = function (filename, parent) {
   return __loadModule(filename, parent)
 }
 
-// const _require = Module.prototype.require
-// Module.prototype.require = function (name, options) {
-//   console.log('module require', name)
-//   if (name === 'fs') {
-//     return _require(name, options)
-//   }
-//   const nameToLoad = path.resolve(process.cwd(), name)
-//   return _require(nameToLoad, options)
-// }
-
 const fs = require('fs')
 const _readFileSync = fs.readFileSync
 const conf = fs.readFileSync(confFilename, 'utf8')
 const config = eval(conf) // eslint-disable-line no-eval
-// console.log(config)
 const specFilename = path.resolve(config.suites[suiteName])
 console.log('spec "%s" filename from conf', suiteName, specFilename)
 
@@ -78,15 +67,6 @@ const specParts = spec.split(sep)
     return part
   })
 
-// function printPart (part, k) {
-  //   console.log('=== part', k)
-  //   console.log(part)
-  // }
-  // specParts.forEach((part, k) => {
-  //   console.log('=== part', k)
-  //   console.log(part)
-  // })
-
 // assuming
 // first part is common (setup)
 // each other part is a separate describe block that will become its
@@ -94,28 +74,15 @@ const specParts = spec.split(sep)
 const preamble = specParts[0]
 const mockSpecs = specParts.slice(1).map((part) => preamble + part)
 console.log('found %d describe blocks in %s', mockSpecs.length, specFilename)
-// mockSpecs.forEach(printPart)
+
 function mockFilename (k) {
   return path.resolve(`./mock-spec-${k}.js`)
 }
 config.suites[suiteName] = mockSpecs.map((part, k) => mockFilename(k))
 console.log('mock suite filenames', config.suites[suiteName])
 
-// config.suites[suiteName].forEach((filename, k) => {
-//   require.cache[filename] = {
-//     id: filename,
-//     filename: filename,
-//     // exports: eval(mockSpecs[k]),
-//     loaded: true
-//   }
-// })
-// console.log(require.cache)
-
 function isMockSpecFilename (filename) {
   return filename.indexOf('mock-spec') !== -1
-// return typeof config !== 'undefined' &&
-//   Array.isArray(config.suites[suiteName]) &&
-//   config.suites[suiteName].indexOf(filename) !== -1
 }
 
 function findMock (filename) {
@@ -134,7 +101,6 @@ fs.readFileSync = function (filename) {
     console.log('loading config file', filename)
     console.log('returning updated config file with mock spec filenames')
     const mockConfigSource = 'exports.config = ' + JSON.stringify(config, null, 2)
-    // console.log(mockConfigSource)
     return mockConfigSource
   } else if (filename === specFilename) {
     console.log('loading spec file', specFilename)
