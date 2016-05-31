@@ -18,7 +18,9 @@ before_script:
   - cd ../..
 script:
   - npm test
-  - cd test/one; npm run test-in-parallel
+  # - cd test/one; npm run test-in-parallel
+  - cd test/one
+  - npm test # run sequence
   - cd ../..
 after_success:
   - npm run semantic-release
