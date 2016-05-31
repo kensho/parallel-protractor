@@ -12,6 +12,9 @@ before_script:
   - npm prune
   - cd test/one; npm run install-hub
   - cd test/one; npm run npm run start-hub &
+script:
+  - npm test
+  - cd test/one; npm run test-in-parallel
 branches:
   except:
     - "/^v\\d+\\.\\d+\\.\\d+$/"
