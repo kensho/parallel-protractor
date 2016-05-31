@@ -11,10 +11,12 @@ node_js:
 before_script:
   - npm prune
   - cd test/one; npm install; npm run install-hub
-  - cd test/one; npm run start-hub &
+  - npm run start-hub &
+  - cd ../..
 script:
   - npm test
   - cd test/one; npm run test-in-parallel
+  - cd ../..
 after_success:
   - npm run semantic-release
 branches:
