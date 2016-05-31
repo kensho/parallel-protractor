@@ -1,6 +1,8 @@
 'use strict'
 
+const debug = require('debug')('parallel')
 const path = require('path')
+const vm = require('vm')
 const confFilename = path.resolve('./conf.js')
 const suiteName = 'one'
 console.log('parallelizing, assuming conf file\n%s\nsuite name "%s"',
@@ -20,10 +22,24 @@ Module._resolveFilename = function (name, from) {
 const __loadModule = Module._load
 Module._load = function (filename, parent) {
   if (isMockSpecFilename(filename)) {
-    console.log('loading mock spec module', filename)
+    debug('loading mock spec module', filename)
     const index = findMock(filename)
-    console.log('mock spec index', index)
-    return eval(mockSpecs[index]) // eslint-disable-line no-eval
+    debug('mock spec index', index)
+    // const __dirname = path.dirname(filename)
+    // const __filename = filename
+    // debug('filename', __filename, 'dirname', __dirname)
+    debug('before evaluating', filename)
+
+    const sandbox = {}
+    vm.createContext(sandbox)
+    sandbox.__filename = filename
+    sandbox.__dirname = path.dirname(filename)
+    sandbox.console = console
+    sandbox.require = require
+    const src = mockSpecs[index]
+    const result = eval(src) // eslint-disable-line no-eval
+    // const result = vm.runInContext(src, sandbox)
+    return result
   }
   return __loadModule(filename, parent)
 }
@@ -33,22 +49,22 @@ const _readFileSync = fs.readFileSync
 const conf = fs.readFileSync(confFilename, 'utf8')
 const config = eval(conf) // eslint-disable-line no-eval
 const specFilename = path.resolve(config.suites[suiteName])
-console.log('spec "%s" filename from conf', suiteName, specFilename)
+debug('spec "%s" filename from conf', suiteName, specFilename)
 
 const _existsSync = fs.existsSync
 fs.existsSync = function (filename) {
-  console.log('file exists?', filename)
+  debug('file exists?', filename)
   return _existsSync(filename)
 }
 const _readdirSync = fs.readdirSync
 fs.readdirSync = function (path) {
-  console.log('loading files in', path)
+  debug('loading files in', path)
   return _readdirSync(path)
 }
 const _lstatSync = fs.lstatSync
 fs.lstatSync = function (filename) {
   if (isMockSpecFilename(filename)) {
-    console.log('lstat on mock spec filename', filename)
+    debug('lstat on mock spec filename', filename)
     return {
       isSymbolicLink: () => false,
       isDirectory: () => false
@@ -73,13 +89,13 @@ const specParts = spec.split(sep)
 // own separate spec "file" (except it will be a mock file without a physical file)
 const preamble = specParts[0]
 const mockSpecs = specParts.slice(1).map((part) => preamble + part)
-console.log('found %d describe blocks in %s', mockSpecs.length, specFilename)
+debug('found %d describe blocks in %s', mockSpecs.length, specFilename)
 
 function mockFilename (k) {
   return path.resolve(`./mock-spec-${k}.js`)
 }
 config.suites[suiteName] = mockSpecs.map((part, k) => mockFilename(k))
-console.log('mock suite filenames', config.suites[suiteName])
+debug('mock suite filenames', config.suites[suiteName])
 
 function isMockSpecFilename (filename) {
   return filename.indexOf('mock-spec') !== -1
@@ -98,19 +114,19 @@ function findMock (filename) {
 
 fs.readFileSync = function (filename) {
   if (filename === confFilename) {
-    console.log('loading config file', filename)
-    console.log('returning updated config file with mock spec filenames')
+    debug('loading config file', filename)
+    debug('returning updated config file with mock spec filenames')
     const mockConfigSource = 'exports.config = ' + JSON.stringify(config, null, 2)
     return mockConfigSource
   } else if (filename === specFilename) {
-    console.log('loading spec file', specFilename)
+    debug('loading spec file', specFilename)
   }
 
   if (isMockSpecFilename(filename)) {
-    console.log('loading mock spec file', filename)
+    debug('loading mock spec file', filename)
   }
   if (filename.indexOf('node_modules') === -1) {
-    console.log(filename)
+    debug('file not from node_modules', filename)
   }
 
   return _readFileSync.apply(null, arguments)
