@@ -1,0 +1,54 @@
+{
+  "name": "parallel-protractor",
+  "version": "1.0.0",
+  "description": "Running parallel end 2 end tests from the same spec file using Protractor",
+  "main": "src",
+  "dependencies": {
+    "check-more-types": "2.21.0",
+    "lazy-ass": "1.4.0"
+  },
+  "devDependencies": {
+    "pre-git": "3.8.4",
+    "standard": "7.1.1",
+    "standard-format": "2.2.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "commit": "commit-wizard",
+    "pretest": "npm run format && npm run lint",
+    "lint": "standard --verbose src/*.js",
+    "format": "standard-format -w src/*.js",
+    "size": "t=\"$(npm pack .)\"; wc -c \"${t}\"; tar tvf \"${t}\"; rm \"${t}\";"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kensho/parallel-protractor.git"
+  },
+  "keywords": [
+    "Protractor",
+    "test",
+    "utility",
+    "node",
+    "parallel"
+  ],
+  "author": "Gleb Bahmutov <gleb@kensho.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kensho/parallel-protractor/issues"
+  },
+  "homepage": "https://github.com/kensho/parallel-protractor#readme",
+  "config": {
+    "pre-git": {
+      "commit-msg": "simple",
+      "pre-commit": [
+        "npm test"
+      ],
+      "pre-push": [
+        "npm run size"
+      ],
+      "post-commit": [],
+      "post-checkout": [],
+      "post-merge": []
+    }
+  }
+}
