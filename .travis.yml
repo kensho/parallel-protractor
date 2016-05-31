@@ -10,6 +10,8 @@ node_js:
   - '6'
 before_script:
   - npm prune
+  - cd test/one; npm run install-hub
+  - cd test/one; npm run npm run start-hub &
 branches:
   except:
     - "/^v\\d+\\.\\d+\\.\\d+$/"
