@@ -4,7 +4,7 @@
   "description": "Parallel-protractor test project one",
   "main": "conf.js",
   "scripts": {
-    "install-hub": "webdriver-manager update --standalone",
+    "install-hub": "webdriver-manager update --standalone --firefox",
     "start-hub": "webdriver-manager start",
     "test": "protractor conf.js",
     "test-in-parallel": "node -r ../.. node_modules/.bin/protractor conf.js"

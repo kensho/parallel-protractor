@@ -9,12 +9,13 @@ node_js:
   - '4'
   - '6'
 before_script:
-  - npm prune
-  - cd test/one; npm install; npm run install-hub
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3 # give xvfb some time to start
+  - npm prune
+  - cd test/one; npm install; npm run install-hub
   - npm run start-hub &
+  - sleep 3
   - cd ../..
 script:
   - npm test
