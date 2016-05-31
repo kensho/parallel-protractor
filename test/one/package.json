@@ -7,7 +7,7 @@
     "install-hub": "webdriver-manager update --standalone",
     "start-hub": "webdriver-manager start",
     "test": "protractor conf.js",
-    "test-in-parallel": "node -r ../.. node_modules/.bin/protractor conf.js --suite=one"
+    "test-in-parallel": "node -r ../.. node_modules/.bin/protractor conf.js"
   },
   "keywords": ["parallel-protractor", "protractor", "test", "example"],
   "author": "Gleb Bahmutov <gleb@kensho.com>",

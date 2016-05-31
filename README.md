@@ -16,10 +16,34 @@ We love open source and use the bleeding edge technology stack.
 [semantic-image]: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
 [semantic-url]: https://github.com/semantic-release/semantic-release
 
-## Extra details
+**WARNING** still work in progress, some dependency loading issues.
 
-See config options for parallel protractor run in 
-[this blog post](http://blog.yodersolutions.com/run-protractor-tests-in-parallel/)
+## Install and use
+
+```
+npm i -D parallel-protractor
+```
+
+Then, instead the command `protractor conf.js` run the command to load `parallel-protractor`
+first
+
+```json
+{
+  "scripts": {
+    "test": "protractor conf.js",
+    "test-in-parallel": "node -r parallel-protractor node_modules/.bin/protractor conf.js"
+  }
+}
+```
+
+## Why?
+
+If you have a large file with long running end to end tests, you can refactor the long file 
+into the smaller separate physical files. The you can 
+[configure parallel tests](http://blog.yodersolutions.com/run-protractor-tests-in-parallel/).
+Or you can just create "virtual" spec files on the fly using `parallel-protractor`! It overrides
+the Node `require` function called from Protractor and tells it that there is a file for each
+`describe` block.
 
 ## License
 
