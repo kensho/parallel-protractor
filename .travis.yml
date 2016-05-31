@@ -11,6 +11,9 @@ node_js:
 before_script:
   - npm prune
   - cd test/one; npm install; npm run install-hub
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - sleep 3 # give xvfb some time to start
   - npm run start-hub &
   - cd ../..
 script:
