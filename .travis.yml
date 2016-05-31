@@ -15,6 +15,8 @@ before_script:
 script:
   - npm test
   - cd test/one; npm run test-in-parallel
+after_success:
+  - npm run semantic-release
 branches:
   except:
     - "/^v\\d+\\.\\d+\\.\\d+$/"
