@@ -3,11 +3,9 @@
 > Running parallel end 2 end tests from the same spec file using Protractor
 
 [![NPM][parallel-protractor-icon] ][parallel-protractor-url]
+
 [![Build status][parallel-protractor-ci-image] ][parallel-protractor-ci-url]
 [![semantic-release][semantic-image] ][semantic-url]
-
-Join [Kensho](https://kensho.com/#/careers) and change the way financial industry analyzes information.
-We love open source and use the bleeding edge technology stack.
 
 [parallel-protractor-icon]: https://nodei.co/npm/parallel-protractor.png?downloads=true
 [parallel-protractor-url]: https://npmjs.org/package/parallel-protractor
