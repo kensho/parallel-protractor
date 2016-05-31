@@ -1,6 +1,6 @@
 {
   "name": "parallel-protractor",
-  "version": "1.0.0",
+  "version": "0.0.0-semantic-release",
   "description": "Running parallel end 2 end tests from the same spec file using Protractor",
   "main": "src",
   "dependencies": {
@@ -23,7 +23,8 @@
     "pretest": "npm run format && npm run lint",
     "lint": "standard --verbose src/*.js",
     "format": "standard-format -w src/*.js",
-    "size": "t=\"$(npm pack .)\"; wc -c \"${t}\"; tar tvf \"${t}\"; rm \"${t}\";"
+    "size": "t=\"$(npm pack .)\"; wc -c \"${t}\"; tar tvf \"${t}\"; rm \"${t}\";",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "repository": {
     "type": "git",
