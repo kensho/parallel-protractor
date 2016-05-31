@@ -4,13 +4,18 @@
   "description": "Parallel-protractor test project one",
   "main": "conf.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "install-hub": "webdriver-manager update --standalone",
+    "start-hub": "webdriver-manager start",
+    "test": "protractor conf.js",
+    "test-in-parallel": "node -r ../.. node_modules/.bin/protractor conf.js --suite=one"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "devDependencies": {
     "chai": "3.5.0",
-    "chai-as-promised": "5.3.0"
+    "chai-as-promised": "5.3.0",
+    "mocha": "2.5.3",
+    "protractor": "3.3.0"
   }
 }

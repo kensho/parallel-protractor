@@ -4,7 +4,7 @@ chai.use(chaiAsPromised);
 var expect = chai.expect;
 var url = 'http://juliemr.github.io/protractor-demo/';
 
-describe('Parallel protractor Demo App', function() {
+describe('Protrator Demo App', function() {
   it('should have a title', function() {
     browser.get(url);
     expect(browser.getTitle()).to.eventually.equal('Super Calculator');

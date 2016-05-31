@@ -13,7 +13,7 @@
     "standard-format": "2.2.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo Write unit tests!",
     "commit": "commit-wizard",
     "pretest": "npm run format && npm run lint",
     "lint": "standard --verbose src/*.js",
