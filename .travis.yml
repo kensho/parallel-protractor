@@ -14,7 +14,7 @@ before_script:
   - sleep 3 # give xvfb some time to start
   - npm prune
   - cd test/one; npm install; npm run install-hub
-  - npm run start-hub &
+  - npm run start-hub 2>&1 &
   - sleep 3
   - cd ../..
 script:
@@ -22,6 +22,7 @@ script:
   # - cd test/one; npm run test-in-parallel
   - cd test/one
   - npm test # run sequence
+  - npm run test-in-parallel
   - cd ../..
 after_success:
   - npm run semantic-release
